@@ -10,10 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout code
+      - name: checkout code
         uses: actions/checkout@v3
-        
-          #submodules: recursive
+        #submodules: recursive
 
       - name: Install system dependencies
         run: |
@@ -35,17 +34,25 @@ jobs:
           key: ${{ runner.os }}-opam-${{ hashFiles('**/opam.locked') }}
           restore-keys: |
             ${{ runner.os }}-opam-
-      - name: "Debug: Search for coq-mathcomp"
-        run: |
-         opam update
-         opam search coq-mathcomp
         continue-on-error: true
+
+      - name: Debug: Search for coq-mathcomp
+        run: |
+          opam update
+          opam search coq-mathcomp
+        continue-on-error: true
+
+      - name: Add Coq opam repository
+        run: opam repo add coq-released https://coq.inria.fr/opam/released
+
       - name: Install Coq and dependencies
         run: |
           opam update
           eval "$(opam env)"
           opam install coq.8.18.0 coq-mathcomp-analysis dune
+
       - name: Build Coq project
         run: make coq
+
       - name: Run Extraction
         run: make extract
