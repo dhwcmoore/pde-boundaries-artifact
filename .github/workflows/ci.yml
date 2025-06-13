@@ -36,7 +36,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-opam-
 
-      - name: Debug: Search for coq-mathcomp
+      - name: Debug Search for coq-mathcomp
         run: |
           opam update
           opam search coq-mathcomp
