@@ -1,3 +1,0 @@
-[submodule "arche-coq/PDE"]
-    path = arche-coq/PDE
-    url  = https://github.com/dhwcmoore/pde-boundaries-artifact.git
