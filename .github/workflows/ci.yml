@@ -52,7 +52,7 @@ jobs:
           opam install coq.8.18.0 coq-mathcomp-analysis dune
 
       - name: Build Coq project
-        run: make coq
+        run: dune build
 
       - name: Run Extraction
         run: make extract
