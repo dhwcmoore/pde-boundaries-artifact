@@ -1,33 +1,37 @@
-name: CI
+name: "CI"
 
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
   pull_request:
-    branches: [ main ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository (no submodules)
+      - name: Checkout code
         uses: actions/checkout@v3
         with:
           submodules: false
+
       - name: Setup OCaml and OPAM
         uses: ocaml/setup-ocaml@v2
         with:
-          ocaml-compiler: '4.14.1'
-          opam-version: '2.1'
+          ocaml-compiler: "4.14.1"
+
       - name: Install Coq and dependencies
         run: |
           opam update
           opam switch create . 8.18.1
           eval $(opam env)
           opam install coq.8.18.0 coq-mathcomp-analysis.X.Y.Z dune
+
       - name: Build Coq project
         run: make coq
+
       - name: Run Extraction
         run: make extract
+
       - name: Clean
         run: make clean
