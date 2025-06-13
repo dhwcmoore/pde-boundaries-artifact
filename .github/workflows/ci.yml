@@ -39,7 +39,7 @@ jobs:
     run: |
         opam update
         opam search coq-mathcomp
-      continue-on-error: true
+    continue-on-error: true
       - name: Install Coq and dependencies
         run: |
           opam update
