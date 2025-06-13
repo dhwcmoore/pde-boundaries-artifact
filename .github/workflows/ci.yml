@@ -36,16 +36,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-opam-
         continue-on-error: true
-
       - name: Install Coq and dependencies
         run: |
           opam update
-          
-         eval "$(opam env)"
-opam install coq.8.18.0 coq-mathcomp-analysis.X.Y.Z dune
-
+          eval "$(opam env)"
+          opam install coq.8.18.0 coq-mathcomp-analysis.X.Y.Z dune
       - name: Build Coq project
         run: make coq
-
       - name: Run Extraction
         run: make extract
