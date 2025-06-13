@@ -40,7 +40,7 @@ jobs:
       - name: Install Coq and dependencies
         run: |
           opam update
-          opam switch create . 4.14.1 --no-install
+          opam switch create . 4.14.1 --no-install --reuse
           eval "$(opam env)"
           opam install coq.8.18.0 coq-mathcomp-analysis.X.Y.Z dune
 
