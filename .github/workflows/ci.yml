@@ -1,3 +1,4 @@
+// === File: .github/workflows/ci.yml ===
 name: CI
 
 on:
@@ -10,13 +11,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository (no submodules)
+        uses: actions/checkout@v3
+        with:
+          submodules: false
       - name: Setup OCaml and OPAM
         uses: ocaml/setup-ocaml@v2
         with:
           ocaml-compiler: '4.14.1'
           opam-version: '2.1'
-      - name: Install dependencies
+      - name: Install Coq and dependencies
         run: |
           opam update
           opam switch create . 8.18.1
