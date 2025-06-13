@@ -44,7 +44,7 @@ jobs:
         run: |
           opam update
           eval "$(opam env)"
-          opam install coq.8.18.0 coq-mathcomp-analysis.X.Y.Z dune
+          opam install coq.8.18.0 coq-mathcomp-analysis dune
       - name: Build Coq project
         run: make coq
       - name: Run Extraction
