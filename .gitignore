@@ -1,0 +1,7 @@
+*.vo
+*.vos
+*.v.d
+Makefile.coq
+arche-coq/PDE/Extraction/*.ml
+*~
+.vscode/
