@@ -19,12 +19,13 @@ jobs:
         uses: ocaml/setup-ocaml@v2
         with:
           ocaml-compiler: "4.14.1"
+          opam-version: "2.1"
 
       - name: Install Coq and dependencies
         run: |
           opam update
-          opam switch create . 8.18.1
-          eval $(opam env)
+          opam switch create . 8.18.1 --no-install
+          eval "$(opam env)"
           opam install coq.8.18.0 coq-mathcomp-analysis.X.Y.Z dune
 
       - name: Build Coq project
@@ -32,6 +33,3 @@ jobs:
 
       - name: Run Extraction
         run: make extract
-
-      - name: Clean
-        run: make clean
