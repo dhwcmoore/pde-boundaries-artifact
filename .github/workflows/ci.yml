@@ -1,10 +1,8 @@
-name: "CI"
-
 on:
   push:
-    branches: ["main"]
+    branches: [ main ]
   pull_request:
-    branches: ["main"]
+    branches: [ main ]
 
 jobs:
   build:
@@ -51,11 +49,11 @@ jobs:
           eval "$(opam env)"
           opam install -y coq.8.18.0 coq-mathcomp-analysis dune
 
-      - name: Build project
-        run: opam exec -- make
-
       - name: Ensure extract.sh is executable
         run: chmod +x arche-coq/PDE/extract.sh
+
+      - name: Build project
+        run: opam exec -- make
 
       - name: Run Extraction
         run: opam exec -- make extract
