@@ -59,7 +59,9 @@ jobs:
          run: |
            eval "$(opam env)"
            dune build
- 
+       - name: Ensure dune is in PATH
+         run: echo "$(opam var bin)" >> $GITHUB_PATH
+
        - name: Run Extraction
          run: |
            eval "$(opam env)"
