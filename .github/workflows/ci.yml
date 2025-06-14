@@ -7,56 +7,61 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-        #submodules: recursive
-
-      - name: Install system dependencies
-        run: |
-          sudo add-apt-repository universe
-          sudo apt-get update
-          sudo apt-get install -y darcs
-
-      - name: Setup OCaml and OPAM
-        uses: ocaml/setup-ocaml@v2
-        with:
-          ocaml-compiler: "4.14.1"
-          opam-version: "2.1"
-
-      - name: Retrieve the opam cache
-        id: cache-ocaml
-        uses: actions/cache@v3
-        continue-on-error: true
-        with:
-          path: ~/.opam
-          key: ${{ runner.os }}-opam-${{ hashFiles('**/opam.locked') }}
-          restore-keys: |
-            ${{ runner.os }}-opam-
-
-      - name: Debug Search for coq-mathcomp
-        run: |
-          opam update
-          opam search coq-mathcomp
-        continue-on-error: true
-
-      - name: Add Coq opam repository
-        run: opam repo add coq-released https://coq.inria.fr/opam/released
-
-      - name: Install Coq and dependencies
-        run: |
-          opam update
-          eval "$(opam env)"
-          opam install coq.8.18.0 coq-mathcomp-analysis dune
-      - name: Install dune
-        run: |
-         opam install dune
-         eval $(opam env)
-
-      - name: Build Coq project
-        run: dune build
-
-      - name: Run Extraction
-        run: make extract
+10|   build:
+11|     runs-on: ubuntu-22.04
+12|     steps:
+13|       - name: checkout code
+14|         uses: actions/checkout@v3
+15|         with:
+16|           submodules: recursive
+17| 
+18|       - name: Install system dependencies
+19|         run: |
+20|           sudo add-apt-repository universe
+21|           sudo apt-get update
+22|           sudo apt-get install -y darcs
+23| 
+24|       - name: Setup OCaml and OPAM
+25|         uses: ocaml/setup-ocaml@v2
+26|         with:
+27|           ocaml-compiler: "4.14.1"
+28|           opam-version: "2.1"
+29| 
+30|       - name: Retrieve the opam cache
+31|         id: cache-ocaml
+32|         uses: actions/cache@v3
+33|         continue-on-error: true
+34|         with:
+35|           path: ~/.opam
+36|           key: ${{ runner.os }}-opam-${{ hashFiles('**/opam.locked') }}
+37|           restore-keys: |
+38|             ${{ runner.os }}-opam-
+39| 
+40|       - name: Debug Search for coq-mathcomp
+41|         run: |
+42|           opam update
+43|           opam search coq-mathcomp
+44|         continue-on-error: true
+45| 
+46|       - name: Add Coq opam repository
+47|         run: opam repo add coq-released https://coq.inria.fr/opam/released
+48| 
+49|       - name: Install Coq and dependencies
+50|         run: |
+51|           opam update
+52|           eval "$(opam env)"
+53|           opam install -y coq.8.18.0 coq-mathcomp-analysis dune
+54|           eval "$(opam env)"
+55| 
+56|       - name: Verify dune installation
+57|         run: dune --version
+58| 
+59|       - name: Build Coq project
+60|         run: |
+61|           eval "$(opam env)"
+62|           dune build
+63| 
+64|       - name: Run Extraction
+65|         run: |
+66|           eval "$(opam env)"
+67|           make extract
