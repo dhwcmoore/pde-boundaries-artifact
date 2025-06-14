@@ -32,7 +32,7 @@ jobs:
         continue-on-error: true
         with:
           path: ~/.opam
-          key: ${{ runner.os }}-opam-${{ hashFiles('**/opam.locked') }}
+          key: ${{ runner.os }}-opam-${{ hashFiles('**/*.opam.locked') }}
           restore-keys: |
             ${{ runner.os }}-opam-
 
@@ -51,8 +51,8 @@ jobs:
           eval "$(opam env)"
           opam install -y coq.8.18.0 coq-mathcomp-analysis dune
 
-      - name: Build Coq project
-        run: opam exec -- dune build
+      - name: Build project
+        run: opam exec -- make
 
       - name: Run Extraction
         run: opam exec -- make extract
