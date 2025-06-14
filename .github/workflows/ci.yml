@@ -54,6 +54,9 @@ jobs:
       - name: Build project
         run: opam exec -- make
 
+      - name: Ensure extract.sh is executable
+        run: chmod +x arche-coq/PDE/extract.sh
+
       - name: Run Extraction
         run: opam exec -- make extract
         continue-on-error: true
