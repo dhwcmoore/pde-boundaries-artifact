@@ -58,3 +58,12 @@ jobs:
       - name: Run Extraction
         run: opam exec -- make extract
         continue-on-error: true
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: pde-boundaries-artifact
+          path: |
+            arche-coq/PDE/_build/extract/**/*.ml
+            arche-coq/PDE/_build/extract/**/*.cmx
+            arche-coq/PDE/extract.sh
