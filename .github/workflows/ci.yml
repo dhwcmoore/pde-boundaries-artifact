@@ -47,7 +47,8 @@ jobs:
         run: |
           opam update
           eval "$(opam env)"
-          opam install -y coq.8.18.0 coq-mathcomp-analysis dune
+          opam install -y coq.8.18.0 'coq-mathcomp-analysis>=0.6.9' dune
+
 
       - name: Ensure extract.sh is executable
         run: chmod +x arche-coq/PDE/extract.sh
